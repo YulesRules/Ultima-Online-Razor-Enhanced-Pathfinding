@@ -5,10 +5,19 @@ This script provides plug and play pathfinding functionality for the game ['Ulti
 I needed a solution to automate some behaviours and the existing API seemed to be made redundant by client changes. This is also my foray into Python, best way to learn I guess :p
 <p><br>
 
+
 https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/assets/110333307/3e90ca0a-361b-4221-a63f-eb053c829564
 </p>
 Full video at: https://www.youtube.com/watch?v=soyAiEbJZsk
 <br><br>
+
+<h2>Features</h2>
+<ul>
+  <li>Ground targeting</li>
+  <li>Diagonal Movement</li>
+  <li>Visual feedback</li>
+</ul>
+<br>
 <h2>Script Configuration</h2>
 The script is configurable with the following settings:
 
