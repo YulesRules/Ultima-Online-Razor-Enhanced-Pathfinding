@@ -73,7 +73,7 @@ if Misc.CheckSharedValue("pathFindingOverride"):
         goalPosition = overrideAsPosition
         if debug > 0:
             Misc.SendMessage(f"Remote pathfinding request detected")  
-            Misc.SendMessage(f"Remote pathfinding request to {override[0],override[0]}")
+            Misc.SendMessage(f"Remote pathfinding request to {override[0],override[1]}")
 
 
 
