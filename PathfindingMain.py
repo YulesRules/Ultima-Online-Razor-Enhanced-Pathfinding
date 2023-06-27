@@ -23,7 +23,7 @@ Note: This is a work in progress and may be updated or changed in future version
 # Configuration Variables
 config = {
     'search_statics': True,  # look for blockable statics like trees, rocks (not blocked by sittable tree trunks) etc...
-    'player_house_filter': True,  # avoid player houses - make this False if you need to use inside a large open player house room without walls
+    'player_house_filter': False,  # avoid player houses - make this False if you need to use inside a large open player house room without walls
     'items_filter': {
         'Enabled': True,  # look for items which may block the tile, chests, tables (but is also stopped by objects like chairs and cups) etc...
     },
@@ -39,6 +39,8 @@ max_distance = 600
 debug = 1 #output messages, 1 is partial feedback and 2 is everything happening during the pathfinding, set it to 0 for peace and quiet!
 maxRetryIterations = 1 #if we get stuck and give up, then try x amount of times to pathfind from the current location
 
+
+
 #***************NO TOUCHING BELOW THIS LINE!!!***************
 retryIteration = 0
 longPause = 5000
@@ -50,8 +52,30 @@ class Position:
         self.X = x
         self.Y = y
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.X == other.X and self.Y == other.Y
+        else:
+            return False
+
 playerStartPosition = Player.Position
 goalPosition = Position(0,0)
+overrideAsPosition = Position(0,0)
+
+
+
+if Misc.CheckSharedValue("pathFindingOverride"):
+    override = Misc.ReadSharedValue("pathFindingOverride")
+    overrideAsPosition = Position(override[0], override[1])
+    
+    
+    if(goalPosition != overrideAsPosition):
+        goalPosition = overrideAsPosition
+        if debug > 0:
+            Misc.SendMessage(f"Remote pathfinding request detected")  
+            Misc.SendMessage(f"Remote pathfinding request to {override[0],override[0]}")
+
+
 
 items_filter = Items.Filter()
 items_filter.Enabled = config['items_filter']['Enabled']
@@ -283,9 +307,9 @@ def move_player_along_path(path):
 
 
 
-    
-    
-goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")    
+if goalPosition == Position(0,0):
+    goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")  
+
 if check_tile(goalPosition.X,goalPosition.Y, items, mobiles):
     if debug > 0:
         Misc.SendMessage(f"Pathfinding to: {goalPosition}")
@@ -318,6 +342,7 @@ if Player.Position == goalPosition:
     Player.HeadMessage(42, "I have arrived!")  
     Misc.SendMessage(f"Movement complete")
 
-#tile_below = check_tile(Player.Position.X-1, Player.Position.Y-1)
-#Misc.SendMessage(f"Tile below is {tile_below}")
+if Misc.CheckSharedValue("pathFindingOverride"):
+    Misc.SetSharedValue("pathFindingOverride", (0,0))#reset shared value to allow for normal targeting prompt
+
         
