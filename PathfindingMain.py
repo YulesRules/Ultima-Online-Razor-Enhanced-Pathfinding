@@ -37,7 +37,7 @@ debug = False #output iteration messages, set it to False for peace and quiet!
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
 longPause = 5000
-shortPause = 100
+shortPause = 150
 
 
 class Position:
