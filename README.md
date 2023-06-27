@@ -4,7 +4,7 @@ This script provides pathfinding functionality for the game ['Ultima Online'](ht
 
 I needed a solution to automate some behaviours and the existing API seemed to be made redundant by server changes. This is also my foray into Python, I prefer C# :p
 
-[![Watch the video]([https://i.imgur.com/vKb2F1B.png](https://i.imgur.com/Mi77XZf.jpg))](https://youtu.be/soyAiEbJZsk)
+[![Watch the video](https://i.imgur.com/Mi77XZf.jpg)](https://youtu.be/soyAiEbJZsk)
 
 ###Script Configuration
 The script is configurable with the following settings:
@@ -41,4 +41,3 @@ Also, note that the pathfinding script can only operate within a certain maximum
 If the script fails to find a path, try adjusting the script's configuration settings or select a destination closer to the player character's current position. If the script fails to move the character along a path, ensure that there are no obstacles blocking the path that the script isn't configured to avoid.
 
 Avoid making changes below the line saying "NO TOUCHING BELOW THIS LINE!!!" unless you know what you're doing!
-
