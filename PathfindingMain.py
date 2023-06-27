@@ -36,7 +36,7 @@ config = {
 max_iterations = 9000 #anything too high (11k-100k might crash your client ;p
 max_distance = 600
 
-debug = 1 #output messages, 1 is partial feedback and 2 is everything happening during the pathfinding, set it to 0 for peace and quiet!
+debug = 2 #output messages, 1 is partial feedback and 2 is everything happening during the pathfinding, set it to 0 for peace and quiet!
 maxRetryIterations = 1 #if we get stuck and give up, then try x amount of times to pathfind from the current location
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
@@ -53,74 +53,47 @@ class Position:
 playerStartPosition = Player.Position
 goalPosition = Position(0,0)
 
-items = []
-mobiles = []
+items_filter = Items.Filter()
+items_filter.Enabled = config['items_filter']['Enabled']
 
-def check_tile(tile_x, tile_y):    
-    max_distance = 200
-    is_tile_blocked = False  
+mobiles_filter = Mobiles.Filter()
+mobiles_filter.Enabled = config['mobiles_filter']['Enabled']
 
-    def check_properties(obj, properties):
-        for prop, value in properties.items():
-            if isinstance(value, dict):
-                if not check_properties(getattr(obj, prop, None), value):
-                    return False
-            else:
-                if prop == 'Name':
-                    if getattr(obj, prop, None) == value:
-                        return False
-                else:
-                    if getattr(obj, prop, None) != value:
-                        return False
-        return True
+items = Items.ApplyFilter(items_filter)
+mobiles = Mobiles.ApplyFilter(mobiles_filter)
 
-    properties_to_check = {
-        'Position': {
-            'X': tile_x,
-            'Y': tile_y
-        },
-        'OnGround': True,
-        'Visible': True,
-        'Name': "nodraw"  
-    }
+def check_tile(tile_x, tile_y, items, mobiles):
+    flag_name = "Impassable"
 
-    # Check for items and mobiles on the target tile
+    # check if any items are on the tile
     for item in items:
-        if check_properties(item, properties_to_check):
-            is_tile_blocked = True
+        if item.Position.X == tile_x and item.Position.Y == tile_y and item.OnGround and item.Visible and item.Name != "nodraw":
+            return False  # Tile is blocked by an item
 
+    # check if any mobiles are on the tile
     for mobile in mobiles:
-        if mobile.Position.X == tile_x and mobile.Position.Y == tile_y:
-            is_tile_blocked = True
+        if mobile.Position.X == tile_x and mobile.Position.Y == tile_y and mobile.Visible:
+            return False  # Tile is blocked by a mobile
 
-    if config['search_statics']:   
-        flag_name = "Impassable"
+    # Check for statics and houses on the tile
+    if config['search_statics']:
         static_land = Statics.GetLandID(tile_x, tile_y, Player.Map)
         if Statics.GetLandFlag(static_land, flag_name):
-            is_tile_blocked = True
+            return False  # Tile is blocked by a static
 
         static_tile = Statics.GetStaticsTileInfo(tile_x, tile_y, Player.Map)
         if len(static_tile) > 0: 
-            for i, static in enumerate(static_tile):
-                #Misc.SendMessage(f"Static Info: {hex(static.StaticID)}", 33)
-                #Misc.SendMessage(f"Static {i} is Impassable: {Statics.GetTileFlag(static.StaticID, flag_name)}", 33)
+            for idx, static in enumerate(static_tile):
                 if Statics.GetTileFlag(static.StaticID, flag_name):
-                    is_tile_blocked = True
-        #else:
-            #Misc.SendMessage(f"No other static tile info detected on this tile")
+                    return False  # Tile is blocked by a static
 
     if config['player_house_filter']:
         is_blocked_by_house = Statics.CheckDeedHouse(tile_x, tile_y)
         if is_blocked_by_house:
-            #Misc.SendMessage(f"Blocked by house: {is_blocked_by_house}") 
-            is_tile_blocked = True
+            return False  # Tile is blocked by a house
 
-    if is_tile_blocked:
-        #Misc.SendMessage(f"||The tile in front is blocked by either statics, mobiles or items with unknown impassability||")
-        return False  # Tile is not passable because it's blocked
-    else:
-        #Misc.SendMessage(f"The tile in front is passable")
-        return True  # Tile is passable because it's not blocked
+    # Tile is passable because it's not blocked
+    return True
 
 # Usage:
 #is_passable = check_tile(Player.Position.X + 1, Player.Position.Y)  # For one tile east
@@ -239,12 +212,12 @@ def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterat
             next_x, next_y = current_node.x + dx, current_node.y + dy
             if dx != 0 and dy != 0:  # if moving diagonally
                 # Check if the tile to the North or South (depending on dy) is passable
-                if not check_tile(current_node.x, current_node.y + dy):
+                if not check_tile(current_node.x, current_node.y + dy, items, mobiles):
                     continue
                 # Check if the tile to the East or West (depending on dx) is passable
-                if not check_tile(current_node.x + dx, current_node.y):
+                if not check_tile(current_node.x + dx, current_node.y, items, mobiles):
                     continue
-            if check_tile(next_x, next_y) and (next_x, next_y) not in closed_nodes:
+            if check_tile(next_x, next_y, items, mobiles) and (next_x, next_y) not in closed_nodes:
                 cost = current_node.cost + 0.05 if dx != 0 and dy != 0 else current_node.cost + 1
                 next_node = Node(next_x, next_y, cost, heuristic(goal_node, Node(next_x, next_y)), current_node)
                 open_nodes.push(next_node)
@@ -313,7 +286,7 @@ def move_player_along_path(path):
     
     
 goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")    
-if check_tile(goalPosition.X,goalPosition.Y):
+if check_tile(goalPosition.X,goalPosition.Y, items, mobiles):
     if debug > 0:
         Misc.SendMessage(f"Pathfinding to: {goalPosition}")
     Player.HeadMessage(42, "Thinking...");
@@ -345,5 +318,6 @@ if Player.Position == goalPosition:
     Player.HeadMessage(42, "I have arrived!")  
     Misc.SendMessage(f"Movement complete")
 
-
+#tile_below = check_tile(Player.Position.X-1, Player.Position.Y-1)
+#Misc.SendMessage(f"Tile below is {tile_below}")
         
