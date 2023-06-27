@@ -1,10 +1,12 @@
 #Pathfinding Script for Razor Enhanced Client in Ultima Online
 
-This script provides pathfinding functionality for the game ['Ultima Online'](https://en.wikipedia.org/wiki/Ultima_Online "'Ultima Online'") using the Razor Enhanced client. The script is written in Python and uses an A* algorithm to find a path for the player character from the current location to a target destination.
+This script provides plug and play pathfinding functionality for the game ['Ultima Online'](https://en.wikipedia.org/wiki/Ultima_Online "'Ultima Online'") using the Razor Enhanced client. The script is written in Python and uses an A* algorithm to find a path for the player character from the current location to a target destination.
 
-I needed a solution to automate some behaviours and the existing API seemed to be made redundant by server changes. This is also my foray into Python, I prefer C# :p
+I needed a solution to automate some behaviours and the existing API seemed to be made redundant by client changes. This is also my foray into Python, best way to learn I guess :p
 
-[![Watch the video](https://i.imgur.com/Mi77XZf.jpg)](https://youtu.be/soyAiEbJZsk)
+
+https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/assets/110333307/3e90ca0a-361b-4221-a63f-eb053c829564
+
 
 ###Script Configuration
 The script is configurable with the following settings:
@@ -34,6 +36,8 @@ Please note that the check_tile() function is used to determine whether a tile i
 
 ##Limitations
 Currently, the script does not support pathfinding in the Z (vertical) direction. Adding support for Z axis is listed as a future task. For now, the pathfinder operates only in the X and Y (horizontal) directions.
+
+Player housing is an issue, by default the script is set to avoid houses altogether though it will work inside a house provided there are no walls to navigate. It will move the character around any items on the floor like tables and furniture, though this also applies to entities you'd typically be able to navigate past. :(  - I can't figure out how to surface the data without making the script needlessly complicated. As is, it's designed to be plug and play.
 
 Also, note that the pathfinding script can only operate within a certain maximum distance (max_distance) and a maximum number of iterations (max_iterations). If the destination is too far, or if finding a path requires more iterations than the maximum allowed, the script may fail to find a path.
 
