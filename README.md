@@ -56,10 +56,10 @@ Please note that the check_tile() function is used to determine whether a tile i
 If you want to call the pathfinding function from another script and use sharedvalues as an argment for the pathfinding position, this script looks for and reads <b><i>"pathFindingOverride"</b></i>
   <br><br><i>(make sure you've added PathfindingMain.py to the Python list on the Scripting tab)</i><br><br>
 
-Example:<br><br>
+<i>&nbsp;&nbsp;Example for pathfinding to grid reference 4525,1119:</i><br><br>
 <b><i>
-Misc.SetSharedValue("pathFindingOverride", (4525,1119)) <br>
-Misc.ScriptRun("PathfindingMain.py")</b></i> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Misc.SetSharedValue("pathFindingOverride", (4525,1119)) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Misc.ScriptRun("PathfindingMain.py")</b></i> 
   <br>
   
 
