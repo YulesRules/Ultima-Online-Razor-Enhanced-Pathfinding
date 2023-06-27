@@ -28,7 +28,7 @@ Console output video demo: https://www.youtube.com/watch?v=soyAiEbJZsk
 <h2>Script Configuration</h2>
 The script is configurable with the following settings:
 
-debug (default is True):  If set to True, will output the iteration attempts at finding a path and the progress of the character as it moves along the route, node by node. 
+debug (default is False):  If set to True, will output the iteration attempts at finding a path and the progress of the character as it moves along the route, node by node. 
 
 search_statics (default is True): If set to True, the pathfinder will avoid static objects like trees and rocks.
 
