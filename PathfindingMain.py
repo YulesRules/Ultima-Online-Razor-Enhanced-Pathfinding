@@ -37,7 +37,7 @@ debug = False #output iteration messages, set it to False for peace and quiet!
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
 longPause = 5000
-shortPause = 200
+shortPause = 100
 
 
 class Position:
@@ -233,10 +233,18 @@ def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterat
             Misc.SendMessage("Pathfinding completed.")
             return path[::-1]
 
-        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]:
             next_x, next_y = current_node.x + dx, current_node.y + dy
+            if dx != 0 and dy != 0:  # if moving diagonally
+                # Check if the tile to the North or South (depending on dy) is passable
+                if not check_tile(current_node.x, current_node.y + dy):
+                    continue
+                # Check if the tile to the East or West (depending on dx) is passable
+                if not check_tile(current_node.x + dx, current_node.y):
+                    continue
             if check_tile(next_x, next_y) and (next_x, next_y) not in closed_nodes:
-                next_node = Node(next_x, next_y, current_node.cost + 1, heuristic(goal_node, Node(next_x, next_y)), current_node)
+                cost = current_node.cost + 1.2 if dx != 0 and dy != 0 else current_node.cost + 1
+                next_node = Node(next_x, next_y, cost, heuristic(goal_node, Node(next_x, next_y)), current_node)
                 open_nodes.push(next_node)
 
     Misc.SendMessage("Pathfinding failed: maximum iterations reached.")
@@ -245,8 +253,16 @@ def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterat
 ###################CHARACTER MOVEMENT#################
 
 def move_player_along_path(path):
-    # shortPause = 100
-    direction_map = {(0, 1): 'South', (0, -1): 'North', (1, 0): 'East', (-1, 0): 'West'}
+    direction_map = {
+    (0, 1): 'South',
+    (0, -1): 'North',
+    (1, 0): 'East',
+    (-1, 0): 'West',
+    (-1, -1): 'Up',
+    (1, 1): 'Down',
+    (1, -1): 'Right',
+    (-1, 1): 'Left'
+}
     stuckCount = 0
     stop_moving = False  # Add a stop flag
 
@@ -260,10 +276,10 @@ def move_player_along_path(path):
         direction = direction_map.get((dx, dy))
 
         if direction and Player.Direction != direction:
-            Player.Walk(direction)
+            Player.Run(direction)
             Misc.Pause(shortPause)
 
-        Player.Walk(direction)
+        Player.Run(direction)
         Misc.Pause(shortPause)
 
         # Output the step
@@ -278,7 +294,7 @@ def move_player_along_path(path):
             if (Player.Position.X, Player.Position.Y) == current_node:
                 if debug == True:
                     Misc.SendMessage(f"Player stuck at {current_node}, trying to move again.")
-                Player.Walk(direction)
+                Player.Run(direction)
                 Misc.Pause(shortPause)
                 stuckCount += 1
                 Player.HeadMessage(42, "oops...thinking..!")
