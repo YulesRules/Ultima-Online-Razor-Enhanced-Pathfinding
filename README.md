@@ -4,7 +4,7 @@ This script provides pathfinding functionality for the game ['Ultima Online'](ht
 
 I needed a solution to automate some behaviours and the existing API seemed to be made redundant by server changes. This is also my foray into Python, I prefer C# :p
 
-[![Watch the video](![Preview1](./images/img1.PNG))](https://youtu.be/soyAiEbJZsk)
+[![Watch the video]([https://i.imgur.com/vKb2F1B.png](https://i.imgur.com/Mi77XZf.jpg))](https://youtu.be/soyAiEbJZsk)
 
 ###Script Configuration
 The script is configurable with the following settings:
