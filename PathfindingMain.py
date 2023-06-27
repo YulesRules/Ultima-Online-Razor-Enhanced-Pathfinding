@@ -46,7 +46,7 @@ class Position:
         self.Y = y
 
 playerStartPosition = Player.Position
-goalPosition = Position(4537,1129)#(4539,111)
+goalPosition = Position(0,0)
 
 def check_tile(tile_x, tile_y):    
     
