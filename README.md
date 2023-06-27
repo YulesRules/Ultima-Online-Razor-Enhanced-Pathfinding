@@ -6,9 +6,16 @@ I needed a solution to automate some behaviours and the existing API seemed to b
 <p><br>
 
 
-https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/assets/110333307/3e90ca0a-361b-4221-a63f-eb053c829564
+
+
+
+https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/assets/110333307/30ed4a81-b9aa-4585-bd11-d28961fbaf07
+
+
+
+
 </p>
-Full video at: https://www.youtube.com/watch?v=soyAiEbJZsk
+Console output video demo: https://www.youtube.com/watch?v=soyAiEbJZsk
 <br><br>
 
 <h2>Features</h2>
@@ -55,6 +62,7 @@ Also, note that the pathfinding script can only operate within a certain maximum
 If the script fails to find a path, try adjusting the script's configuration settings or select a destination closer to the player character's current position. If the script fails to move the character along a path, ensure that there are no obstacles blocking the path that the script isn't configured to avoid.
 
 Avoid making changes below the line saying "NO TOUCHING BELOW THIS LINE!!!" unless you know what you're doing!
+
 
 Thanks for taking an interest 
 
