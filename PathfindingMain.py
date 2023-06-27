@@ -310,10 +310,13 @@ def move_player_along_path(path):
     
     
 goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")    
-Misc.SendMessage(f"Pathfinding to: {goalPosition}")
-Player.HeadMessage(42, "Thinking...");
-path = a_star_pathfinding(Player.Position, goalPosition, check_tile, max_iterations=max_iterations)
-if path:
+if check_tile(goalPosition.X,goalPosition.Y):
+    Misc.SendMessage(f"Pathfinding to: {goalPosition}")
+    Player.HeadMessage(42, "Thinking...");
+    path = a_star_pathfinding(Player.Position, goalPosition, check_tile, max_iterations=max_iterations)
+else: 
+    path = 0    
+if path is not 0:
     Player.HeadMessage(42, "Here we go!");
     for node in path:
         if debug == True:
@@ -322,7 +325,9 @@ if path:
 else:
     if debug == True:
         Misc.SendMessage(f"No valid path found.")
-    Player.HeadMessage(42, "I can't figure out how to get there!")
-    
+        Player.HeadMessage(42, "I can't figure out how to get there!")
+        
+if path == 0:
+    Player.HeadMessage(42, "That's inaccessible!")
 if Player.Position == goalPosition:    
     Player.HeadMessage(42, "I have arrived!")
