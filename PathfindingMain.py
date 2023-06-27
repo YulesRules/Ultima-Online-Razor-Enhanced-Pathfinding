@@ -32,7 +32,7 @@ config = {
     },
 }
 
-debug = False #output iteration messages, set it to False for peace and quiet!
+debug = True #output iteration messages, set it to False for peace and quiet!
 
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
@@ -243,7 +243,7 @@ def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterat
                 if not check_tile(current_node.x + dx, current_node.y):
                     continue
             if check_tile(next_x, next_y) and (next_x, next_y) not in closed_nodes:
-                cost = current_node.cost + 1.2 if dx != 0 and dy != 0 else current_node.cost + 1
+                cost = current_node.cost + 0.05 if dx != 0 and dy != 0 else current_node.cost + 1
                 next_node = Node(next_x, next_y, cost, heuristic(goal_node, Node(next_x, next_y)), current_node)
                 open_nodes.push(next_node)
 
