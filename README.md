@@ -77,10 +77,10 @@ Also, note that the pathfinding script can only operate within a certain maximum
 <br>
 <h2>Troubleshooting</h2>
 If the script fails to find a path, try adjusting the script's configuration settings or select a destination closer to the player character's current position. If the script fails to move the character along a path, ensure that there are no obstacles blocking the path that the script isn't configured to avoid.
-
+<br><br>
 Avoid making changes below the line saying "NO TOUCHING BELOW THIS LINE!!!" unless you know what you're doing!
-
+<br><br>
 
 Thanks for taking an interest 
-
+<br><br>
 - Yulia.M
