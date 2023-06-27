@@ -1,5 +1,24 @@
 #To do - add Z axis (this might be more complicated than it sounds when it comes to pathfinding, but for an item/mob tile check it's fine)
 
+"""
+Ultima Online Razor Enhanced Pathfinding
+Author: Yulia.M
+Github: https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding
+
+This Python script provides an implementation of the A* pathfinding algorithm for use with the Razor Enhanced client in Ultima Online. 
+It allows player characters to navigate around obstacles in the game world such as items, mobiles (NPCs), player houses, and more. 
+
+The pathfinding algorithm uses configurable filters to identify potential obstacles, 
+and checks each tile along the path to determine if it is passable or not. 
+
+The goal position for pathfinding is set interactively by the player using the in-game target prompt. 
+
+Please refer to the README at https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/blob/main/README.md for detailed instructions and configuration options.
+
+Date: June 2023
+
+Note: This is a work in progress and may be updated or changed in future versions.
+"""
 
 # Configuration Variables
 config = {
