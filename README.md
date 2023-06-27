@@ -38,7 +38,7 @@ Please note that the check_tile() function is used to determine whether a tile i
 <h2>Limitations</h2>
 Currently, the script does not support pathfinding in the Z (vertical) direction. Adding support for Z axis is listed as a future task. For now, the pathfinder operates only in the X and Y (horizontal) directions.
 
-Player housing is an issue, by default the script is set to avoid houses altogether though it will work inside a house provided there are no walls to navigate. It will move the character around any items on the floor like tables and furniture (provided you set <b>player_house_filter': False</b>, though this also applies to entities you'd typically be able to navigate past. :(  - I can't figure out how to surface the data without making the script needlessly complicated. As is, it's designed to be plug and play.
+Player housing is an issue, by default the script is set to avoid houses altogether though it will work inside a house provided there are no walls to navigate. It will move the character around any items on the floor like tables and furniture (provided you set <i><b>player_house_filter': False</b>)</i>, though this also applies to entities you'd typically be able to navigate past. :(  - I can't figure out how to surface the data without making the script needlessly complicated. As is, it's designed to be plug and play.
 
 Also, note that the pathfinding script can only operate within a certain maximum distance (max_distance) and a maximum number of iterations (max_iterations). If the destination is too far, or if finding a path requires more iterations than the maximum allowed, the script may fail to find a path.
 <br>
