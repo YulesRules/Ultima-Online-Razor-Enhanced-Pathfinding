@@ -7,7 +7,8 @@ I needed a solution to automate some behaviours and the existing API seemed to b
 
 https://github.com/YulesRules/Ultima-Online-Razor-Enhanced-Pathfinding/assets/110333307/3e90ca0a-361b-4221-a63f-eb053c829564
 </p>
-<br>
+Full video at: https://www.youtube.com/watch?v=soyAiEbJZsk
+<br><br>
 <h2>Script Configuration</h2>
 The script is configurable with the following settings:
 
