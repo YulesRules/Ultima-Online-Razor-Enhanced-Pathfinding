@@ -32,7 +32,7 @@ config = {
     },
 }
 
-debug = True #output iteration messages, set it to False for peace and quiet!
+debug = False #output iteration messages, set it to False for peace and quiet!
 
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
