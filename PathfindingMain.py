@@ -33,9 +33,10 @@ config = {
 }
 
 debug = False #output iteration messages, set it to False for peace and quiet!
-
+maxRetryIterations = 1 #if we get stuck and give up, then try x amount of times to pathfind from the current location
 
 #***************NO TOUCHING BELOW THIS LINE!!!***************
+retryIteration = 0
 longPause = 5000
 shortPause = 150
 
@@ -48,20 +49,12 @@ class Position:
 playerStartPosition = Player.Position
 goalPosition = Position(0,0)
 
+items = []
+mobiles = []
+
 def check_tile(tile_x, tile_y):    
-    
-    items_filter = Items.Filter()
-    items_filter.Enabled = config['items_filter']['Enabled']
-
-    mobiles_filter = Mobiles.Filter()
-    mobiles_filter.Enabled = config['mobiles_filter']['Enabled']
-    
-    max_distance = 100
+    max_distance = 800
     is_tile_blocked = False  
-
-    # Apply the filters to get all items and mobiles
-    items = Items.ApplyFilter(items_filter)
-    mobiles = Mobiles.ApplyFilter(mobiles_filter)
 
     def check_properties(obj, properties):
         for prop, value in properties.items():
@@ -90,12 +83,10 @@ def check_tile(tile_x, tile_y):
     # Check for items and mobiles on the target tile
     for item in items:
         if check_properties(item, properties_to_check):
-            #Misc.SendMessage(f"{item.Name} detected on tile - is it passable?! Who knows, better play it safe!")
             is_tile_blocked = True
 
     for mobile in mobiles:
         if mobile.Position.X == tile_x and mobile.Position.Y == tile_y:
-            #Misc.SendMessage(f"Found mobile {mobile.Name} with ID {mobile.Serial} on target tile", 33)
             is_tile_blocked = True
 
     if config['search_statics']:   
@@ -132,8 +123,8 @@ def check_tile(tile_x, tile_y):
 #Misc.SendMessage(f"is_passable = {is_passable}")  # Prints True if the tile is passable, False otherwise
 
 #PATH FINDING
-max_iterations = 1200
-max_distance = 100
+max_iterations = 8000
+max_distance = 600
 
 
 class Node:
@@ -192,6 +183,15 @@ def heuristic(a, b):
     return abs(b.x - a.x) + abs(b.y - a.y)
 
 def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterations=10000, max_distance=None):
+    # Apply the filters to get all items and mobiles
+    items_filter = Items.Filter()
+    items_filter.Enabled = config['items_filter']['Enabled']
+
+    mobiles_filter = Mobiles.Filter()
+    mobiles_filter.Enabled = config['mobiles_filter']['Enabled']
+
+    items = Items.ApplyFilter(items_filter)
+    mobiles = Mobiles.ApplyFilter(mobiles_filter)
     open_nodes = BinaryHeap()
     closed_nodes = set()
     path = None
@@ -206,12 +206,12 @@ def a_star_pathfinding(playerStartPosition, goalPosition, check_tile, max_iterat
     for i in range(max_iterations):
         if debug == True:
             Misc.SendMessage(f"Current iteration: {i}")
-        if i == 500:
-            Player.HeadMessage(42, "Difficult one...")
-        if i == 800:
-            Player.HeadMessage(42, "Let's see...")   
-        if i == 1100:
-            Player.HeadMessage(42, "Yikes, I need more time...")        
+        #if i == 2000:
+            #Player.HeadMessage(42, "Difficult one...")
+        if i == 4000:
+            Player.HeadMessage(42, "Difficult one...")   
+        #if i == 6000:
+            #Player.HeadMessage(42, "Yikes, I need more time...")        
         if len(open_nodes.heap) == 0:
             Misc.SendMessage("Pathfinding failed: no valid path found.")
             return None
@@ -307,6 +307,7 @@ def move_player_along_path(path):
                 break
 
 
+
     
     
 goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")    
@@ -316,18 +317,25 @@ if check_tile(goalPosition.X,goalPosition.Y):
     path = a_star_pathfinding(Player.Position, goalPosition, check_tile, max_iterations=max_iterations)
 else: 
     path = 0    
-if path is not 0:
+if path == 0:
+    Player.HeadMessage(42, "That's inaccessible!")
+elif not path:
+    Player.HeadMessage(42, "I can't figure out how to get there!")
+    if debug == True:
+        Misc.SendMessage(f"No valid path found.")
+        
+else:
     Player.HeadMessage(42, "Here we go!");
     for node in path:
         if debug == True:
             Misc.SendMessage(f"Node in path: {node}")
     move_player_along_path(path)  # Moved outside the loop
-else:
-    if debug == True:
-        Misc.SendMessage(f"No valid path found.")
-        Player.HeadMessage(42, "I can't figure out how to get there!")
-        
-if path == 0:
-    Player.HeadMessage(42, "That's inaccessible!")
+    
+    
+   
+
 if Player.Position == goalPosition:    
-    Player.HeadMessage(42, "I have arrived!")
+    Player.HeadMessage(42, "I have arrived!")  
+
+
+        
