@@ -50,6 +50,10 @@ If the script encounters an obstacle it can't bypass, it will output an error me
 When the player character reaches the target location, the script will output a message stating "I have arrived!"
 
 Please note that the check_tile() function is used to determine whether a tile in the game is passable. It checks for static objects, items, and mobiles, using the configuration settings to determine what to avoid. The function returns True if a tile is passable, and False otherwise.
+
+If you want to override the targetting prompt and go to a known destination, comment out...<br> <br> 
+<b><i>goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")</b></i><br> <br> 
+...then enter coordinates for <b><i>goalPosition.X</b></i> and <b><i>goalPosition.Y</b></i> respectively.
 <br>
 <h2>Limitations</h2>
 Currently, the script does not support pathfinding in the Z (vertical) direction. Adding support for Z axis is listed as a future task. For now, the pathfinder operates only in the X and Y (horizontal) directions.
