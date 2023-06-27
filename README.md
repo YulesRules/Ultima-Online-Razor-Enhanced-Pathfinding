@@ -23,6 +23,7 @@ Console output video demo: https://www.youtube.com/watch?v=soyAiEbJZsk
   <li>Ground targeting</li>
   <li>Diagonal Movement</li>
   <li>Visual feedback</li>
+  <li>Call pathfinding from other scripts using <b><i>sharedvalue</b></i></li>
 </ul>
 <br>
 <h2>Script Configuration</h2>
@@ -51,9 +52,21 @@ When the player character reaches the target location, the script will output a 
 
 Please note that the check_tile() function is used to determine whether a tile in the game is passable. It checks for static objects, items, and mobiles, using the configuration settings to determine what to avoid. The function returns True if a tile is passable, and False otherwise.
 
-If you want to override the targetting prompt and go to a known destination, comment out...<br> <br> 
-<b><i>goalPosition = Target.PromptGroundTarget("Where do you wish to pathfind?")</b></i><br> <br> 
-...then enter coordinates for <b><i>goalPosition.X</b></i> and <b><i>goalPosition.Y</b></i> respectively.
+<h3>Calling from other scripts</h3>
+If you want to call the pathfinding function from another script and use sharedvalues as an argment for the pathfinding position, this script looks for and reads <b><i>"pathFindingOverride"</b></i>
+  <br><br><i>(make sure you've added PathfindingMain.py to the Python list on the Scripting tab)</i><br><br>
+
+Example:<br><br>
+<b><i>
+Misc.SetSharedValue("pathFindingOverride", (4525,1119)) <br>
+Misc.ScriptRun("PathfindingMain.py")</b></i> 
+  <br>
+  
+
+<br>
+If the override is set to a tuple other than (0,0) the targeting prompt will be aborted and the script will attempt to direct itself straight to those coordinates.<br><br>
+<b>Note</b>, after the script finishes, it will revert the override to (0,0) so it can be used with the targeting prompt as normal. 
+
 <br>
 <h2>Limitations</h2>
 Currently, the script does not support pathfinding in the Z (vertical) direction. Adding support for Z axis is listed as a future task. For now, the pathfinder operates only in the X and Y (horizontal) directions.
