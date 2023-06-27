@@ -64,7 +64,7 @@ If you want to call the pathfinding function from another script and use sharedv
   
 
 <br>
-If the override is set to a tuple other than (0,0) the targeting prompt will be aborted and the script will attempt to direct itself straight to those coordinates.<br><br>
+If the override is set to a tuple other than (0,0) the targeting prompt will be aborted and the script will attempt to direct the player straight to those coordinates.<br><br>
 <b>Note</b>, after the script finishes, it will revert the override to (0,0) so it can be used with the targeting prompt as normal. 
 
 <br>
