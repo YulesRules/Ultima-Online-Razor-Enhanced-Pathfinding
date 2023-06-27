@@ -54,7 +54,7 @@ Please note that the check_tile() function is used to determine whether a tile i
 
 <h3>Calling from other scripts</h3>
 If you want to call the pathfinding function from another script and use sharedvalues as an argment for the pathfinding position, this script looks for and reads <b><i>"pathFindingOverride"</b></i>
-  <br><br><i>(make sure you've added PathfindingMain.py to the Python list on the Scripting tab)</i><br><br>
+  <br><br><i>(make sure you've added PathfindingMain.py to the Python list on the 'Scripting' tab)</i><br><br>
 
 <i>&nbsp;&nbsp;Example for pathfinding to grid reference 4525,1119:</i><br><br>
 <b><i>
