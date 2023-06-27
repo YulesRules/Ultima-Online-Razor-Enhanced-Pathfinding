@@ -28,15 +28,15 @@ Console output video demo: https://www.youtube.com/watch?v=soyAiEbJZsk
 <h2>Script Configuration</h2>
 The script is configurable with the following settings:
 
-debug (default is False):  If set to True, will output the iteration attempts at finding a path and the progress of the character as it moves along the route, node by node. 
+<b><i>debug</b></i> (default is 1):  If set to 2, will output the iteration attempts at finding a path and the progress of the character as it moves along the route, node by node. Set it to 0 for peace and quiet or 1 if you're curious about what's going on. 
 
-search_statics (default is True): If set to True, the pathfinder will avoid static objects like trees and rocks.
+<b><i>search_statics</b></i> (default is True): If set to True, the pathfinder will avoid static objects like trees and rocks.
 
-player_house_filter (default is True): If set to True, the pathfinder will avoid player houses. Set this to False if you wish the pathfinder to operate inside an open player house room without walls.
+<b><i>player_house_filter</b></i> (default is True): If set to True, the pathfinder will avoid player houses. Set this to False if you wish the pathfinder to operate inside an open player house room without walls.
 
-items_filter (default is {'Enabled': True}): If the 'Enabled' field is set to True, the pathfinder will avoid items that may block the path such as chests, tables etc.
+<b><i>items_filter</b></i> (default is {'Enabled': True}): If the 'Enabled' field is set to True, the pathfinder will avoid items that may block the path such as chests, tables etc.
 
-mobiles_filter (default is {'Enabled': True}): If the 'Enabled' field is set to True, the pathfinder will avoid mobiles (e.g., non-static entities like NPCs or animals) that may block the path.
+<b><i>mobiles_filter</b></i> (default is {'Enabled': True}): If the 'Enabled' field is set to True, the pathfinder will avoid mobiles (e.g., non-static entities like NPCs or animals) that may block the path.
 <br>
 <h2>Usage</h2>
 To start using the script, target the destination point by clicking on the desired location in the game. A prompt will appear asking "Where do you wish to pathfind?"
