@@ -23,7 +23,7 @@ Note: This is a work in progress and may be updated or changed in future version
 # Configuration Variables
 config = {
     'search_statics': True,  # look for blockable statics like trees, rocks (not blocked by sittable tree trunks) etc...
-    'player_house_filter': False,  # avoid player houses - make this False if you need to use inside a large open player house room without walls
+    'player_house_filter': True,  # avoid player houses - make this False if you need to use inside a large open player house room without walls
     'items_filter': {
         'Enabled': True,  # look for items which may block the tile, chests, tables (but is also stopped by objects like chairs and cups) etc...
     },
